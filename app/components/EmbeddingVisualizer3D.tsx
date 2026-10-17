@@ -18,34 +18,34 @@ interface DataPoint {
 
 // GitHub repositories data
 const GITHUB_REPOS: DataPoint[] = [
-  // --- LLM Research : explicabilité et vérification des LLM ---
-  { id: "cove", x: -14, y: 8, z: 4, category: "LLM Research", label: "XAI-LLM-CoVe_Verification", github: "https://github.com/mathura-snth/XAI-LLM-CoVe_Verification", keywords: ["XAI", "LLM", "Counterfactual", "PyTorch"] },
-  { id: "synthetic-bench", x: -10, y: 12, z: -3, category: "LLM Research", label: "Synthetic-Benchmark", github: "https://github.com/mathura-snth/Math-LLM-Verifier", keywords: ["Formal Methods", "Theorem Proving", "Dataset Design"] },
+  // --- AI & Large Language Models ---
+  { id: "cove", x: -14, y: 8, z: 4, category: "AI & Large Language Models", label: "XAI-LLM-CoVe_Verification", github: "https://github.com/mathura-snth/XAI-LLM-CoVe_Verification", keywords: ["XAI", "LLM", "Counterfactual", "PyTorch"] },
+  { id: "synthetic-bench", x: -10, y: 12, z: -3, category: "AI & Large Language Models", label: "Synthetic-Benchmark", github: "https://github.com/mathura-snth/Math-LLM-Verifier", keywords: ["Formal Methods", "Theorem Proving", "Dataset Design"] },
+  { id: "dentarag", x: 6, y: -2, z: 13, category: "AI & Large Language Models", label: "DentaRAG", github: "https://github.com/mathura-snth/RAG_from_scratch", keywords: ["Hybrid Search", "LangChain", "FastAPI", "PostgreSQL"] },
+  { id: "agentic-langgraph", x: 2, y: 2, z: 16, category: "AI & Large Language Models", label: "Agentic-AI-Langgraph", github: "https://github.com/mathura-snth/Agentic-AI-Langgraph", keywords: ["LangGraph", "Multi-Agent", "Agentic AI", "LLM"] },
+  { id: "nlp-recommend", x: 13, y: 8, z: -7, category: "AI & Large Language Models", label: "NLP-Movie-Recommender", github: "https://github.com/mathura-snth/NLP-Movie-Recommender-DWL", keywords: ["TF-IDF", "Sentence-Transformers", "nDCG", "Flask"] },
 
-  // --- LLM Applications : systèmes construits autour des LLM ---
-  { id: "dentarag", x: 6, y: -2, z: 13, category: "LLM Applications", label: "DentaRAG", github: "https://github.com/mathura-snth/RAG_from_scratch", keywords: ["Hybrid Search", "LangChain", "FastAPI", "PostgreSQL"] },
-  { id: "agentic-langgraph", x: 2, y: 2, z: 16, category: "LLM Applications", label: "Agentic-AI-Langgraph", github: "https://github.com/mathura-snth/Agentic-AI-Langgraph", keywords: ["LangGraph", "Multi-Agent", "Agentic AI", "LLM"] },
+  // --- Machine Learning & Data Engineering ---
+  { id: "employee-perf", x: -12, y: -2, z: 8, category: "Machine Learning & Data Engineering", label: "Employee-Performance-Prediction", github: "https://github.com/mathura-snth", keywords: ["SMOTE", "Balanced Random Forest", "XGBoost", "NumPy Pipeline"] },
+  { id: "smartdata", x: -15, y: -5, z: 5, category: "Machine Learning & Data Engineering", label: "SmartDATA-Quality", github: "https://github.com/mathura-snth", keywords: ["Oracle SQL", "Data Quality", "Anomaly Detection", "Embeddings"] },
+  { id: "m1-ingenierie-donnees", x: -18, y: 0, z: 10, category: "Machine Learning & Data Engineering", label: "M1-Ingenierie_Donnees", github: "https://github.com/mathura-snth/M1-Ingenierie_Donnees", keywords: ["Data Engineering", "ETL"] },
 
-  // --- NLP & Search ---
-  { id: "nlp-recommend", x: 13, y: 8, z: -7, category: "NLP & Search", label: "NLP-Movie-Recommender", github: "https://github.com/mathura-snth/NLP-Movie-Recommender-DWL", keywords: ["TF-IDF", "Sentence-Transformers", "nDCG", "Flask"] },
+  // --- Distributed Systems & Architecture ---
+  { id: "distributed-2pc", x: -1, y: -13, z: -9, category: "Distributed Systems & Architecture", label: "Distributed-System-2PC", github: "https://github.com/mathura-snth", keywords: ["Java", "2PC", "Sockets", "Multithreading"] },
+  { id: "mpi-distributed", x: -4, y: -12, z: -14, category: "Distributed Systems & Architecture", label: "MPI-Distributed-Algorithms", github: "https://github.com/mathura-snth/MPI-Distributed-Algorithms", keywords: ["MPI", "Distributed Algorithms", "Parallel Computing"] },
+  { id: "microservices-demo", x: 1, y: -9, z: -12, category: "Distributed Systems & Architecture", label: "Microservices-Architecture-Demo", github: "https://github.com/mathura-snth/Microservices-Architecture-Demo", keywords: ["Microservices", "Docker", "Architecture"] },
 
-  // --- Algorithms & Systems ---
-  { id: "routes-optimization", x: -6, y: -8, z: -13, category: "Algorithms & Systems", label: "Routes-Optimization", github: "https://github.com/mathura-snth/Advanced-Route-Optimization", keywords: ["lazy strategy", "Dijkstra", "A*", "Contraction Hierarchies", "CSR"] },
-  // TODO : remplacer par l'URL exacte du dépôt Java (2PC)
-  { id: "distributed-2pc", x: -1, y: -13, z: -9, category: "Algorithms & Systems", label: "Distributed-System-2PC", github: "https://github.com/mathura-snth", keywords: ["Java", "2PC", "Sockets", "Multithreading", "ReentrantLock"] },
-  { id: "mpi-distributed", x: -4, y: -12, z: -14, category: "Algorithms & Systems", label: "MPI-Distributed-Algorithms", github: "https://github.com/mathura-snth/MPI-Distributed-Algorithms", keywords: ["MPI", "Distributed Algorithms", "Parallel Computing"] },
-  { id: "microservices-demo", x: 1, y: -9, z: -12, category: "Algorithms & Systems", label: "Microservices-Architecture-Demo", github: "https://github.com/mathura-snth/Microservices-Architecture-Demo", keywords: ["Microservices", "Software Architecture"] },
-  { id: "knapsack", x: -9, y: -12, z: -8, category: "Algorithms & Systems", label: "Knapsack", github: "https://github.com/mathura-snth/Knapsack", keywords: ["Knapsack Problem", "Optimization"] },
+  // --- Algorithms & Optimization ---
+  { id: "routes-optimization", x: -6, y: -8, z: -13, category: "Algorithms & Optimization", label: "Routes-Optimization", github: "https://github.com/mathura-snth/Advanced-Route-Optimization", keywords: ["Dijkstra", "A*", "Contraction Hierarchies", "CSR"] },
+  { id: "knapsack", x: -9, y: -12, z: -8, category: "Algorithms & Optimization", label: "Knapsack", github: "https://github.com/mathura-snth/Knapsack", keywords: ["Knapsack Problem", "Optimization"] },
+  { id: "tautologie-ocaml", x: 15, y: -6, z: 6, category: "Algorithms & Optimization", label: "Tautologie-OCaml", github: "https://github.com/mathura-snth/Tautologie-OCaml", keywords: ["OCaml", "Propositional Logic", "Functional"] },
+  { id: "zork", x: 12, y: -11, z: 11, category: "Algorithms & Optimization", label: "Zork", github: "https://github.com/mathura-snth/Zork", keywords: ["Text Adventure", "Game Design"] },
 
-  // --- Programming & Logic : programmation fonctionnelle, logique, jeux ---
-  { id: "tautologie-ocaml", x: 15, y: -6, z: 6, category: "Programming & Logic", label: "Tautologie-OCaml", github: "https://github.com/mathura-snth/Tautologie-OCaml", keywords: ["OCaml", "Propositional Logic", "Functional Programming"] },
-  { id: "zork", x: 12, y: -11, z: 11, category: "Programming & Logic", label: "Zork", github: "https://github.com/mathura-snth/Zork", keywords: ["Text Adventure", "Game Design"] },
-
-  // --- Data & Web ---
-  { id: "m1-ingenierie-donnees", x: -16, y: -2, z: 12, category: "Data & Web", label: "M1-Ingenierie_Donnees", github: "https://github.com/mathura-snth/M1-Ingenierie_Donnees", keywords: ["Data Engineering", "M1 Coursework"] },
-  { id: "wikicomptines", x: -11, y: 2, z: 17, category: "Data & Web", label: "Wikicomptines", github: "https://github.com/mathura-snth/Wikicomptines", keywords: ["Web", "Data"] },
-  { id: "microdon", x: -19, y: -7, z: 8, category: "Data & Web", label: "Microdon", github: "https://github.com/mathura-snth/Microdon", keywords: ["Web App"] },
-  { id: "robbie-lens", x: -8, y: -5, z: 19, category: "Data & Web", label: "Robbie-Lens", github: "https://github.com/mathura-snth/Robbie-Lens", keywords: ["Software Project"] },
+  // --- Full-Stack Software Engineering ---
+  { id: "nlp-recommend", x: 9, y: 13, z: 10, category: "Full-Stack Software Engineering", label: "NLP-Movie-Recommender", github: "https://github.com/mathura-snth/NLP-Movie-Recommender-DWL", keywords: ["TF-IDF", "Sentence-Transformers", "Flask", "Docker", "API"] },
+  { id: "wikicomptines", x: 8, y: 15, z: 12, category: "Full-Stack Software Engineering", label: "Wikicomptines", github: "https://github.com/mathura-snth/Wikicomptines", keywords: ["Web", "React"] },
+  { id: "microdon", x: 11, y: 12, z: 8, category: "Full-Stack Software Engineering", label: "Microdon", github: "https://github.com/mathura-snth/Microdon", keywords: ["Web App", "Full-Stack"] },
+  { id: "robbie-lens", x: 5, y: 14, z: 15, category: "Full-Stack Software Engineering", label: "Robbie-Lens", github: "https://github.com/mathura-snth/Robbie-Lens", keywords: ["Portfolio", "Frontend"] },
 ];
 
 // Seulement les catégories réellement utilisées

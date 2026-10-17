@@ -3,12 +3,11 @@
 // sont donc définies ici en hex.
 
 export const CATEGORY_COLORS: Record<string, string> = {
-  "LLM Research": "#3e7a5f",
-  "LLM Applications": "#d98c5f",
-  "NLP & Search": "#5b8db8",
-  "Algorithms & Systems": "#c75f6b",
-  "Programming & Logic": "#9a7bb5",
-  "Data & Web": "#c9a24b",
+  "AI & Large Language Models": "#3e7a5f",
+  "Machine Learning & Data Engineering": "#5b8db8",
+  "Distributed Systems & Architecture": "#c75f6b",
+  "Algorithms & Optimization": "#9a7bb5",
+  "Full-Stack Software Engineering": "#d98c5f",
 };
 
 // Couleurs de la grille 3D (équivalents hex de --border et d'une teinte plus claire)

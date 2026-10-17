@@ -127,6 +127,18 @@ function NavBar() {
           >
             <a href="/notes">Notes</a>
           </motion.li>
+          <motion.li
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.2 }}
+          >
+            <a 
+              href="mailto:mathura.santhalingam@gmail.com" 
+              className="btn btn-secondary"
+              style={{ padding: "0.5rem 1rem", fontSize: "0.9rem", margin: 0 }}
+            >
+              Get in Touch
+            </a>
+          </motion.li>
         </ul>
       </div>
     </motion.nav>
@@ -142,16 +154,16 @@ const WHO_STATS = [
       "Top of my Master 1 class, with a double degree in Math & CS behind it.",
   },
   {
-    value: "10+",
+    value: "20+",
     label: "Projects",
     detail:
       "Beyond coursework, I keep building: RAG, agentic AI, route optimization, distributed systems.",
   },
   {
-    value: "Active",
-    label: "Research",
+    value: "March 2027", 
+    label: "Available",
     detail:
-      "Researching LLM verification at LIPN. Looking for an internship leading to a CDI in data / AI.",
+      "Actively looking for an M2 internship leadind to a CDI in Data / AI starting early March 2027.",
   },
 ];
 
@@ -186,8 +198,7 @@ function WhoAmI() {
           </h2>
 
           <p className="hero-subtitle" style={enter(0.1)}>
-            M2 AI Student @ Université Sorbonne Paris Nord • Research Intern @
-            LIPN • Building the future of Explainable AI
+            M2 AI Student @ Université Sorbonne Paris Nord • Previously Research Intern @ LIPN • Seeking an M2 Internship • From data pipelines to AI-driven solutions
           </p>
 
           <p className="hero-description" style={enter(0.2)}>
@@ -297,7 +308,7 @@ function WhoAmI() {
             <a href="#projects" className="btn">
               View Work
             </a>
-            <a href="mailto:mathura2609@gmail.com" className="btn btn-secondary">
+            <a href="mailto:mathura.santhalingam@gmail.com" className="btn btn-secondary">
               Get in Touch
             </a>
           </div>
@@ -314,7 +325,7 @@ function WhoAmI() {
             }}
           >
             <span className="status-dot" aria-hidden="true" />
-            Looking for an internship leading to a CDI in data / AI
+            Actively looking for an M2 internship starting early March 2027
           </p>
         </div>
       </div>
@@ -472,7 +483,7 @@ function ResearchFocus() {
               }}
             >
               <span className="status-dot" aria-hidden="true" />
-              In progress at LIPN, since June 2026
+              Conducted at LIPN (June - August 2026)
             </p>
           </div>
         </Reveal>
@@ -682,7 +693,7 @@ function Footer() {
           <div className="footer-section">
             <h4>Contact</h4>
             <p>
-              <a href="mailto:mathura2609@gmail.com">mathura2609@gmail.com</a>
+              <a href="mailto:mathura.santhalingam@gmail.com">mathura.santhalingam@gmail.com</a>
             </p>
           </div>
         </div>
