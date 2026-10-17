@@ -128,13 +128,13 @@ function NavBar() {
             <a href="/notes">Notes</a>
           </motion.li>
           <motion.li
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ color: "#4f7a64" }}
             transition={{ duration: 0.2 }}
           >
             <a 
               href="mailto:mathura.santhalingam@gmail.com" 
               className="btn btn-secondary"
-              style={{ padding: "0.5rem 1rem", fontSize: "0.9rem", margin: 0 }}
+              style={{ padding: "0rem 0.9rem", fontSize: "0.9rem", margin: 0 }}
             >
               Get in Touch
             </a>
@@ -202,10 +202,11 @@ function WhoAmI() {
           </p>
 
           <p className="hero-description" style={enter(0.2)}>
-            I'm passionate about understanding whether LLMs truly reason or just
-            fabricate explanations. Currently working on CoVe (Counterfactual
-            Verification) to detect hallucinated explanations at scale. Deep
-            interest in formal methods, XAI, and making AI systems trustworthy.
+            With a dual background in Mathematics and Computer Science,
+            I specialize in building end-to-end data solutions.
+            From engineering robust data pipelines and distributed systems
+            to training predictive machine learning models,
+            I am passionate about turning complex data into actionable insights.
           </p>
 
           <div
@@ -303,16 +304,6 @@ function WhoAmI() {
               );
             })}
           </div>
-
-          <div className="cta-buttons" style={enter(0.4)}>
-            <a href="#projects" className="btn">
-              View Work
-            </a>
-            <a href="mailto:mathura.santhalingam@gmail.com" className="btn btn-secondary">
-              Get in Touch
-            </a>
-          </div>
-
           <p
             style={{
               ...enter(0.5),
