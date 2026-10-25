@@ -4,6 +4,7 @@ import { OrbitControls, Html } from "@react-three/drei";
 import * as THREE from "three";
 import { motion } from "framer-motion";
 import { CATEGORY_COLORS, GRID_COLORS } from "../components/theme";
+import ProjectModal from "../components/ProjectModal";
 
 interface DataPoint {
   id: string;
@@ -42,7 +43,8 @@ const GITHUB_REPOS: DataPoint[] = [
   { id: "zork", x: 12, y: -11, z: 11, category: "Algorithms & Optimization", label: "Zork", github: "https://github.com/mathura-snth/Zork", keywords: ["Text Adventure", "Game Design"] },
 
   // --- Full-Stack Software Engineering ---
-  { id: "nlp-recommend", x: 9, y: 13, z: 10, category: "Full-Stack Software Engineering", label: "NLP-Movie-Recommender", github: "https://github.com/mathura-snth/NLP-Movie-Recommender-DWL", keywords: ["TF-IDF", "Sentence-Transformers", "Flask", "Docker", "API"] },
+  // NB : l'id était en double ("nlp-recommend") ; renommé pour éviter les conflits de key et de fiche.
+  { id: "nlp-recommend-web", x: 9, y: 13, z: 10, category: "Full-Stack Software Engineering", label: "NLP-Movie-Recommender", github: "https://github.com/mathura-snth/NLP-Movie-Recommender-DWL", keywords: ["TF-IDF", "Sentence-Transformers", "Flask", "Docker", "API"] },
   { id: "wikicomptines", x: 8, y: 15, z: 12, category: "Full-Stack Software Engineering", label: "Wikicomptines", github: "https://github.com/mathura-snth/Wikicomptines", keywords: ["Web", "React"] },
   { id: "microdon", x: 11, y: 12, z: 8, category: "Full-Stack Software Engineering", label: "Microdon", github: "https://github.com/mathura-snth/Microdon", keywords: ["Web App", "Full-Stack"] },
   { id: "robbie-lens", x: 5, y: 14, z: 15, category: "Full-Stack Software Engineering", label: "Robbie-Lens", github: "https://github.com/mathura-snth/Robbie-Lens", keywords: ["Portfolio", "Frontend"] },
@@ -76,7 +78,13 @@ function Legend() {
   );
 }
 
-function ProjectPoints({ data }: { data: DataPoint[] }) {
+function ProjectPoints({
+  data,
+  onSelect,
+}: {
+  data: DataPoint[];
+  onSelect: (point: DataPoint) => void;
+}) {
   const groupRef = useRef<THREE.Group>(null);
   const [hoveredNode, setHoveredNode] = useState<DataPoint | null>(null);
 
@@ -105,7 +113,12 @@ function ProjectPoints({ data }: { data: DataPoint[] }) {
               setHoveredNode(null);
               document.body.style.cursor = "auto";
             }}
-            onClick={() => window.open(point.github, "_blank")}
+            onClick={(e) => {
+              e.stopPropagation();
+              setHoveredNode(null);
+              document.body.style.cursor = "auto";
+              onSelect(point);
+            }}
           >
             {/* Core sphere */}
             <mesh>
@@ -178,6 +191,8 @@ function ProjectPoints({ data }: { data: DataPoint[] }) {
 }
 
 export default function EmbeddingVisualizer3D() {
+  const [selected, setSelected] = useState<DataPoint | null>(null);
+
   return (
     <motion.div
       className="embedding-container"
@@ -189,7 +204,7 @@ export default function EmbeddingVisualizer3D() {
       <div className="viz-header">
         <h2 className="section-title">GitHub Repository Space</h2>
         <p className="section-subtitle">
-          3D visualization of my projects - rotate, zoom, and hover to explore
+          3D visualization of my projects - rotate, zoom, hover, and click a point to see details
         </p>
       </div>
 
@@ -199,7 +214,7 @@ export default function EmbeddingVisualizer3D() {
           style={{ background: "transparent" }}
         >
           <ambientLight intensity={0.5} />
-          <ProjectPoints data={GITHUB_REPOS} />
+          <ProjectPoints data={GITHUB_REPOS} onSelect={setSelected} />
           <gridHelper
             args={[60, 20, GRID_COLORS.main, GRID_COLORS.secondary]}
             position={[0, -20, 0]}
@@ -216,14 +231,16 @@ export default function EmbeddingVisualizer3D() {
       <Legend />
 
       <div className="repos-list">
-        <h3>Projects Directory</h3>
+        <h3>Details</h3>
+        <p className="section-subtitle" style={{ marginBottom: "1rem" }}>
+          Click a project to see my notes, key points and typical questions.
+        </p>
         <div className="repos-grid">
           {GITHUB_REPOS.map((repo) => (
-            <motion.a
+            <motion.button
               key={repo.id}
-              href={repo.github}
-              target="_blank"
-              rel="noopener noreferrer"
+              type="button"
+              onClick={() => setSelected(repo)}
               className="repo-card"
               whileHover={{ scale: 1.05, y: -5 }}
               transition={{ duration: 0.3 }}
@@ -238,11 +255,17 @@ export default function EmbeddingVisualizer3D() {
                 {repo.category}
               </span>
               <h4>{repo.label}</h4>
-              <p>View Repository →</p>
-            </motion.a>
+              <p>View details →</p>
+            </motion.button>
           ))}
         </div>
       </div>
+
+      <ProjectModal
+        project={selected}
+        color={selected ? colorOf(selected.category) : "#92baa1"}
+        onClose={() => setSelected(null)}
+      />
 
       <style
         dangerouslySetInnerHTML={{
@@ -256,14 +279,33 @@ export default function EmbeddingVisualizer3D() {
         .legend-item { display: flex; align-items: center; margin-bottom: 0.5rem; }
         .legend-color { width: 12px; height: 12px; border-radius: 50%; margin-right: 0.5rem; }
         .repos-list { margin-top: 2rem; }
-        .repos-list h3 { color: var(--accent-dark); margin-bottom: 1rem; font-size: 1.3rem; }
+        .repos-list h3 { color: var(--accent-dark); margin-bottom: 0.5rem; font-size: 1.3rem; }
         .repos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
-        .repo-card { background: var(--surface); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1rem; transition: all 0.3s; cursor: pointer; text-decoration: none; display: block; box-shadow: 0 2px 10px rgba(62, 90, 78, 0.06); }
+        .repo-card { background: var(--surface); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1rem; transition: all 0.3s; cursor: pointer; text-decoration: none; display: block; text-align: left; font: inherit; width: 100%; box-shadow: 0 2px 10px rgba(62, 90, 78, 0.06); }
         .repo-card:hover { border-color: var(--accent); box-shadow: 0 8px 24px rgba(62, 90, 78, 0.12); }
         .repo-card .badge { display: inline-block; background: rgb(var(--accent-rgb) / 0.15); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.5rem; border: 1px solid transparent; }
         .repo-card h4 { color: var(--text-primary); margin-bottom: 0.5rem; font-size: 0.95rem; }
         .repo-card p { color: var(--accent-text); font-size: 0.85rem; margin: 0; }
         @media (max-width: 768px) { .embedding-container { padding: 2rem 1rem; } .canvas-wrapper { height: 350px; } .repos-grid { grid-template-columns: 1fr; } }
+
+        /* ---- Modale de détails (rendue dans document.body via un portail) ---- */
+        .modal-backdrop { position: fixed; inset: 0; z-index: 200; background: rgb(43 58 51 / 0.45); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 1rem; }
+        .modal { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 2rem; width: min(680px, 100%); max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(62, 90, 78, 0.25); }
+        .modal-close { position: absolute; top: 0.75rem; right: 1rem; background: none; border: none; font-size: 1.75rem; line-height: 1; color: var(--text-secondary); cursor: pointer; }
+        .modal-close:hover { color: var(--accent-dark); }
+        .modal-badge { display: inline-block; background: rgb(var(--accent-rgb) / 0.15); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; border: 1px solid transparent; }
+        .modal-title { color: var(--text-primary); font-size: 1.5rem; margin: 0.5rem 0 1rem; }
+        .modal h4 { color: var(--accent-dark); margin: 1.25rem 0 0.5rem; }
+        .modal ul { padding-left: 1.2rem; color: var(--text-secondary); line-height: 1.6; }
+        .modal li { margin-bottom: 0.35rem; }
+        .modal-text { color: var(--text-secondary); line-height: 1.7; }
+        .modal-context { font-style: italic; margin-top: 0.5rem; }
+        .modal-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .modal .btn { margin-top: 1.5rem; }
+        .qa { border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.75rem 1rem; margin-bottom: 0.5rem; }
+        .qa summary { cursor: pointer; font-weight: 600; color: var(--text-primary); }
+        .qa p { margin-top: 0.5rem; color: var(--text-secondary); line-height: 1.6; }
+        @media (max-width: 768px) { .modal { padding: 1.5rem 1.25rem; max-height: 90vh; } }
       `,
         }}
       />
