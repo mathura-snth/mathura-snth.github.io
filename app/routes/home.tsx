@@ -355,7 +355,7 @@ const SKILL_CATEGORIES = [
   },
   {
     category: "Languages",
-    skills: ["Python", "Java", "SQL", "TypeScript", "JavaScript", "Rust"],
+    skills: ["Python", "Java", "SQL", "TypeScript", "JavaScript"],
   },
 ];
 
