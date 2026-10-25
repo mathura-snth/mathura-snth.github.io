@@ -63,20 +63,44 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
     stack: ["Python", "PyTorch", "Qwen (free model)", "Claude", "Kaggle (GPU)"],
     qa: [
       {
-        q: "How does CoVe work?",
-        a: "The model first produces a baseline analysis. It then plans 3 verification questions targeting what may be hypothetical or wrong. Each question is answered independently, and a final answer is produced from the verified facts.",
+        q: "Qu'est-ce qu'une hallucination de LLM ?",
+        a: "Une sortie fluide mais fausse ou non fondée. On distingue l'hallucination factuelle (contraire à la réalité), la fidélité (contraire au contexte fourni) et l'incohérence interne.",
       },
       {
-        q: "Why answer the questions without showing the baseline?",
-        a: "If the model sees its baseline, it tends to repeat its own mistakes. Isolated answers give an independent check.",
+        q: "Pourquoi les LLM hallucinent-ils ?",
+        a: "Ils sont entraînés à prédire le token le plus probable, pas à dire le vrai. Données lacunaires ou bruitées, absence de grounding et décodage qui privilégie la fluidité favorisent l'erreur.",
       },
       {
-        q: "What was the hardest part?",
-        a: "Parsing. The pipeline chains several model calls, so every output has to be valid JSON, otherwise the next step breaks.",
+        q: "Explique CoVe en 4 étapes.",
+        a: "1) Réponse initiale (baseline). 2) Planification de questions de vérification. 3) Réponse à chaque question de façon indépendante. 4) Réponse finale corrigée à partir des faits vérifiés.",
       },
       {
-        q: "Which models and infrastructure did you use?",
-        a: "A free Qwen model (plus Claude), running on Kaggle to get GPUs at no cost.",
+        q: "Pourquoi répondre aux questions de vérification sans voir la baseline ?",
+        a: "Si le modèle voit sa réponse initiale, il tend à la confirmer et à répéter ses erreurs. L'isolation (variante « factored ») donne une vérification indépendante.",
+      },
+      {
+        q: "Quelles sont les limites de CoVe ?",
+        a: "Coût et latence (plusieurs appels), le modèle peut se tromper aussi en vérifiant, et il ne corrige pas une connaissance absente. La qualité dépend des questions générées.",
+      },
+      {
+        q: "Différence avec self-consistency, self-refine, chain-of-thought ?",
+        a: "Chain-of-thought : raisonner étape par étape. Self-consistency : échantillonner plusieurs raisonnements et voter. Self-refine : critiquer puis réécrire sa réponse. CoVe : vérifier des faits précis via des questions indépendantes.",
+      },
+      {
+        q: "Quelle a été ta principale difficulté technique ?",
+        a: "Le parsing : le pipeline enchaîne plusieurs appels, donc chaque sortie doit être un JSON valide sinon l'étape suivante casse. Solution : prompt strict, validation du schéma, nouvelle tentative en cas d'échec.",
+      },
+      {
+        q: "Comment as-tu mesuré que CoVe améliore la fidélité ?",
+        a: "Comparaison baseline vs CoVe sur le même benchmark, avec les mêmes métriques. Gain mesuré : [À COMPLÉTER]. Limite : un seul modèle et un benchmark restreint.",
+      },
+      {
+        q: "Quelles méthodes d'explicabilité (XAI) connais-tu pour les LLM ?",
+        a: "Attention (discutable comme explication), attributions par gradient, SHAP/LIME, perturbation d'entrée, probing, logit lens. Elles aident à comprendre où le modèle s'appuie, sans prouver la causalité.",
+      },
+      {
+        q: "Quelle est ta contribution à l'abstract AAAI ?",
+        a: "[À COMPLÉTER] : ce que tu as implémenté, le résultat principal et le statut (soumis / accepté). Reste exacte : « soumis » ne veut pas dire accepté.",
       },
     ],
   },
@@ -93,16 +117,20 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
     stack: ["Python", "Formal methods", "Theorem proving", "Dataset design"],
     qa: [
       {
-        q: "Why build a synthetic benchmark?",
-        a: "To test CoVe on complex reasoning, where existing text-based evaluations don't apply, and to control exactly which errors are present.",
+        q: "Comment conçois-tu un benchmark valide ?",
+        a: "Couverture variée des cas, vérité terrain fiable, pas de contamination avec les données d'entraînement, reproductibilité (seed, script) et difficulté graduée.",
       },
       {
-        q: "How do you get the ground truth?",
-        a: "By injecting errors yourself: you know where each error is and what type it is, so no manual annotation is needed.",
+        q: "Pourquoi un benchmark synthétique avec erreurs injectées ?",
+        a: "La vérité terrain est connue par construction (position et type de l'erreur), sans annotation manuelle, et on contrôle la difficulté.",
       },
       {
-        q: "Why use typed errors?",
-        a: "Typing the errors lets you measure which kinds the verifier detects and which it misses, instead of one global score.",
+        q: "Limites d'un benchmark synthétique ?",
+        a: "Les erreurs injectées ne reflètent pas forcément les erreurs réelles d'un LLM, et le modèle peut repérer des artefacts de génération. D'où l'intérêt de le compléter par des cas réels.",
+      },
+      {
+        q: "Comment mesures-tu la détection d'erreurs ?",
+        a: "Rappel et précision par type d'erreur, plus la localisation de l'erreur. Le typage évite un score global qui cache les faiblesses.",
       },
     ],
   },
@@ -123,20 +151,60 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
     stack: ["Python", "FastAPI", "LangChain", "ChromaDB", "PyMuPDF", "Qwen via Groq", "RAGAS"],
     qa: [
       {
-        q: "How does your RAG pipeline work?",
-        a: "Ingest the PDFs, split them into chunks, embed and store them in ChromaDB. At query time, embed the question, retrieve the top-k most similar chunks, and have the LLM answer only from them, with citations.",
+        q: "Décris ton architecture de bout en bout.",
+        a: "PDF → extraction PyMuPDF → découpage en chunks (1 483 pages, 4 011 segments) → embeddings (dim. 384) → ChromaDB. À la requête : embedding de la question, top-k par similarité, prompt avec contexte et citations, génération (Qwen via Groq), puis vérification CoVe. Le tout exposé par une API FastAPI.",
       },
       {
-        q: "How do you reduce hallucinations?",
-        a: "Answers must cite retrieved sources, and a CoVe step re-checks the claims. Evaluation with RAGAS then measures faithfulness to the sources.",
+        q: "Pourquoi « from scratch » ?",
+        a: "Pour comprendre et maîtriser chaque brique (découpage, retrieval, évaluation) plutôt que de subir les abstractions d'un framework.",
       },
       {
-        q: "How do you evaluate a RAG system?",
-        a: "RAGAS is a framework that uses an LLM as judge to score faithfulness, answer relevancy, context precision and context recall, on a golden dataset of reference questions.",
+        q: "Comment as-tu choisi la taille des chunks ?",
+        a: "Compromis : trop petit, on perd le contexte ; trop grand, le vecteur dilue le sens et on consomme la fenêtre de contexte. Taille et overlap : [À COMPLÉTER], ajustés sur la qualité de retrieval. Moyenne : environ 1 483 pages / 4 011 segments, soit 2 à 3 segments par page.",
       },
       {
-        q: "What is MCP and why add it?",
-        a: "Model Context Protocol: a standard way for an MCP server to give an LLM access to tools. The goal is to turn the RAG into an agent that can decide which tool to call.",
+        q: "Pourquoi ChromaDB et comment cherche-t-il ?",
+        a: "Base vectorielle locale simple à intégrer. L'index est HNSW, un graphe de voisinage approximatif : recherche en temps quasi logarithmique au prix d'un léger rappel perdu. Alternatives : FAISS, Qdrant, pgvector.",
+      },
+      {
+        q: "Cosinus, produit scalaire ou L2 ?",
+        a: "Sur des vecteurs normalisés, cosinus et produit scalaire sont équivalents et L2 donne le même classement. Le cosinus ne dépend que de la direction, pas de la norme.",
+      },
+      {
+        q: "Comment améliorer le retrieval ?",
+        a: "Recherche hybride (BM25 + dense), reranker cross-encoder (plus précis qu'un bi-encoder mais plus lent, donc appliqué au top-k seulement), réécriture de requête, filtres sur métadonnées.",
+      },
+      {
+        q: "Quelles sont les limites de PyMuPDF sur des thèses ?",
+        a: "Les tableaux, figures, formules et mises en page à colonnes sont mal restitués, et les PDF scannés demandent de l'OCR.",
+      },
+      {
+        q: "Comment fonctionne Ragas ?",
+        a: "Un LLM juge calcule : faithfulness (les affirmations sont-elles soutenues par le contexte ?), answer relevancy, context precision (le contexte utile est-il bien classé ?) et context recall (a-t-on tout récupéré ?). Les scores obtenus : [À COMPLÉTER].",
+      },
+      {
+        q: "Quels sont les biais d'un LLM juge ?",
+        a: "Biais de position, de verbosité et d'auto-préférence. Mitigation : juge différent du générateur, jeu de référence validé à la main, plusieurs exécutions.",
+      },
+      {
+        q: "Comment diagnostiquer une réponse fausse ?",
+        a: "Séparer retrieval et génération : le bon passage est-il dans le top-k ? Sinon, problème de chunking, d'embedding ou de requête. Si oui, problème de prompt ou de génération.",
+      },
+      {
+        q: "Que fait le système quand le corpus n'a pas la réponse ?",
+        a: "Le prompt impose de répondre « je ne sais pas » si le contexte est insuffisant, et un seuil de similarité peut court-circuiter la génération.",
+      },
+      {
+        q: "Qu'est-ce que MCP et en quoi diffère-t-il du function calling ?",
+        a: "Model Context Protocol : un standard ouvert pour exposer outils et données à un LLM via un serveur. Le function calling est la capacité du modèle à appeler des fonctions ; MCP standardise comment ces outils sont décrits et branchés, de façon réutilisable entre applications.",
+      },
+      {
+        q: "RAG ou agent : quand choisir quoi ?",
+        a: "Un RAG suffit pour répondre depuis un corpus. L'agent est utile quand il faut choisir entre plusieurs outils ou enchaîner des étapes, au prix de plus de coût, de latence et de risques (boucles, injection de prompt).",
+      },
+      {
+        q: "Et pour la confidentialité des données ?",
+        a: "Ici le corpus est public (thèses). Avec des données sensibles : modèle auto-hébergé ou contrat conforme RGPD, anonymisation et contrôle d'accès.",
       },
     ],
   },
@@ -153,16 +221,16 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
     stack: ["Python", "LangGraph", "Pydantic", "LLM"],
     qa: [
       {
-        q: "Why LangGraph rather than a simple chain?",
-        a: "Agents need loops, branching and shared state. LangGraph models the workflow as a graph of nodes with an explicit state, which makes these flows controllable.",
+        q: "Qu'est-ce qu'un agent et la boucle ReAct ?",
+        a: "Un LLM qui alterne raisonnement et actions (appels d'outils) en observant les résultats, jusqu'à pouvoir répondre.",
       },
       {
-        q: "What is the role of Pydantic?",
-        a: "It defines and validates the state and tool inputs and outputs, so the data passed between nodes has a guaranteed structure.",
+        q: "Quels sont les risques des agents ?",
+        a: "Boucles infinies, appels d'outils non voulus, prompt injection via des contenus externes, coûts et latence. Mitigation : limites d'étapes, validation humaine, outils en lecture seule.",
       },
       {
-        q: "What would the multi-agent step add?",
-        a: "Specialised agents that cooperate, each with its own tools, coordinated by the graph.",
+        q: "LangChain vs LangGraph ?",
+        a: "LangChain compose des chaînes linéaires et fournit des intégrations. LangGraph modélise des graphes d'état avec cycles et branchements, plus adaptés aux agents.",
       },
     ],
   },
@@ -181,20 +249,36 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
     stack: ["Python", "PyMuPDF", "pdfplumber", "Regex", "PostgreSQL", "SQL", "LLM"],
     qa: [
       {
-        q: "Why a low temperature?",
-        a: "The task is extraction and classification, not creative writing. A low temperature makes outputs more deterministic and less prone to invention.",
+        q: "Comment as-tu extrait les PDF et segmenté en clauses ?",
+        a: "PyMuPDF avec détection de colonnes, nettoyage (en-têtes, numéros de page), puis segmentation par expressions régulières sur la numérotation des articles. Les regex sont rapides, déterministes et vérifiables, mais fragiles face aux formats atypiques.",
       },
       {
-        q: "Why keep a human in the loop?",
-        a: "Contract analysis has real consequences. A human validating borderline cases cuts hallucination risk and builds trust in the score.",
+        q: "Comment forces-tu le LLM à sortir du JSON valide ?",
+        a: "Schéma explicite dans le prompt (ou mode JSON / sortie structurée), validation avec Pydantic, nouvelle tentative en cas d'échec, température basse. Si le JSON reste invalide, l'élément est rejeté et journalisé.",
       },
       {
-        q: "How do you evaluate a toxicity score?",
-        a: "Compare it with a golden dataset of annotated clauses, using an LLM as judge to scale the comparison.",
+        q: "Qu'est-ce qu'une clause « toxique » et qui a défini la vérité terrain ?",
+        a: "Clause abusive ou défavorable au client selon des critères définis à l'avance. Annotation : [À COMPLÉTER] (qui, selon quels critères, accord entre annotateurs ?). Avec environ 20 contrats, la vérité terrain est petite et possiblement biaisée.",
       },
       {
-        q: "What was the data challenge?",
-        a: "Going from unstructured PDFs to clean structured segments: extraction, cleaning with regex, segmentation, then JSON stored in PostgreSQL.",
+        q: "Pourquoi prioriser le rappel ?",
+        a: "Un faux négatif (clause toxique manquée) coûte plus cher qu'un faux positif (une clause en plus à relire par un humain). On accepte donc une précision plus faible.",
+      },
+      {
+        q: "Précision, rappel, F1, matrice de confusion ?",
+        a: "Précision = VP/(VP+FP). Rappel = VP/(VP+FN). F1 = moyenne harmonique des deux. La matrice de confusion croise classes prédites et réelles. En multiclasse : macro (classes à poids égal) ou micro (global).",
+      },
+      {
+        q: "Qu'est-ce que LLM-as-a-judge et le contrôle d'ancrage ?",
+        a: "Un LLM note une sortie par rapport à une référence ou à des critères. Le contrôle d'ancrage vérifie que chaque élément extrait ou justifié est bien présent dans le texte source.",
+      },
+      {
+        q: "Pourquoi 5 entités dans le modèle conceptuel ?",
+        a: "[À COMPLÉTER : liste de tes 5 entités]. Chaque entité correspond à un concept distinct (contrat, clause, etc.) pour éviter la redondance (normalisation).",
+      },
+      {
+        q: "Un LLM peut-il donner un avis juridique ?",
+        a: "Non : c'est un outil d'aide à la détection et à la transparence. La décision reste humaine, d'où le human in the loop et la nécessité de justifications traçables.",
       },
     ],
   },
@@ -217,24 +301,48 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
     stack: ["Python", "NumPy", "scikit-learn", "SMOTE", "Balanced Random Forest", "XGBoost"],
     qa: [
       {
-        q: "Why not use accuracy?",
-        a: "With imbalanced classes, predicting the majority class gives high accuracy and no value. Macro-F1 averages precision and recall across classes so rare ones count equally.",
+        q: "Quel est le jeu de données et la cible ?",
+        a: "64 271 lignes, cible multiclasse (score de 1 à 5), fortement déséquilibrée. Répartition des classes : [À COMPLÉTER].",
       },
       {
-        q: "How does SMOTE work, and what are its risks?",
-        a: "It creates synthetic minority rows by interpolating between a rare example and its nearest neighbours. It must be applied on the training set only, otherwise synthetic data leaks into the test.",
+        q: "Raconte la fuite de cible (F1 0,93 → 0,19).",
+        a: "Une variable [À COMPLÉTER] encodait déjà l'information de la cible, d'où 0,93. Détection : score anormalement élevé et importance dominante de cette variable. Après retrait, 0,19 est le résultat honnête : les variables disponibles séparent mal les classes.",
       },
       {
-        q: "Class weights, undersampling or SMOTE?",
-        a: "Class weights keep all data but change the loss; undersampling discards majority rows; SMOTE adds synthetic minority rows. I compared them with macro-F1 rather than assuming one was best.",
+        q: "Pourquoi macro-F1 plutôt qu'accuracy ?",
+        a: "Avec des classes déséquilibrées, prédire la classe majoritaire donne une bonne accuracy sans valeur. Le macro-F1 donne le même poids à chaque classe.",
       },
       {
-        q: "What did you conclude?",
-        a: "Rebalancing increased recall on rare classes at the cost of precision. The available features did not separate the classes, so no technique could fully fix it. Knowing when a model has no signal is a result in itself.",
+        q: "Où appliquer SMOTE par rapport à la validation croisée ?",
+        a: "Uniquement sur le pli d'entraînement, à l'intérieur d'un pipeline. Appliqué avant le split, il crée des échantillons synthétiques proches de points de test : fuite et score gonflé.",
       },
       {
-        q: "Why implement softmax in NumPy?",
-        a: "To understand the mechanics (loss, gradients) and validate them by gradient checking and by comparison with scikit-learn.",
+        q: "Quand SMOTE est-il peu adapté ?",
+        a: "Données de grande dimension, variables catégorielles, classes qui se chevauchent : les points synthétiques créent alors du bruit.",
+      },
+      {
+        q: "Comment fonctionne le gradient boosting / XGBoost ?",
+        a: "Des arbres faibles ajoutés séquentiellement, chacun corrigeant l'erreur résiduelle (gradient de la perte) du précédent, avec régularisation. Hyperparamètres clés : learning rate, profondeur, nombre d'arbres, subsample. Optimisés par validation croisée à 5 plis (stratifiée).",
+      },
+      {
+        q: "Écris la perte et le gradient de la régression softmax.",
+        a: "Perte : entropie croisée L = −(1/n) Σ log p(y_i|x_i). Gradient : (1/n) Xᵀ(P − Y) avec P les probabilités softmax. Stabilité numérique : soustraire le max avant l'exponentielle (log-sum-exp).",
+      },
+      {
+        q: "Comment as-tu vérifié le gradient ?",
+        a: "Par différences finies centrées (f(θ+ε) − f(θ−ε)) / 2ε, comparées au gradient analytique : erreur relative de l'ordre de 1e-7 attendue.",
+      },
+      {
+        q: "Explique le bootstrap et les différences appariées.",
+        a: "On rééchantillonne avec remise pour estimer la variabilité d'une métrique, d'où un intervalle de confiance à 95 % (percentile). Les différences appariées comparent deux modèles sur les mêmes rééchantillons, ce qui annule la variance commune et donne un test plus puissant.",
+      },
+      {
+        q: "Quelle conclusion tires-tu ?",
+        a: "Le rééquilibrage augmente le rappel des classes rares au prix de la précision. Il ne crée pas d'information : savoir qu'un modèle n'a pas de signal est un résultat en soi.",
+      },
+      {
+        q: "Comment traiter une cible ordinale (1 à 5) ?",
+        a: "Régression ordinale ou régression avec arrondi, car la classification multiclasse ignore l'ordre. Métriques adaptées : erreur absolue moyenne, kappa pondéré.",
       },
     ],
   },
@@ -252,16 +360,40 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
     stack: ["Oracle SQL", "Cursors", "Dynamic SQL", "Regex", "Python", "Embeddings"],
     qa: [
       {
-        q: "Why use blocking?",
-        a: "Comparing every row with every other is quadratic. A cheap blocking key (first 3 characters) restricts comparisons to likely candidates.",
+        q: "Que fait MERGE en SQL ?",
+        a: "Une seule instruction qui fait un UPDATE si la ligne existe (clause MATCHED) et un INSERT sinon (NOT MATCHED). Pratique pour fusionner des doublons et dédupliquer.",
       },
       {
-        q: "How do you decide two rows are duplicates?",
-        a: "A similarity measure (e.g. bigram-based) on the relevant fields, chosen per field type, with a threshold; then merge rules decide which values to keep.",
+        q: "Compare les mesures de similarité (Levenshtein, Jaro-Winkler, Jaccard, Q-gram, embeddings).",
+        a: "Levenshtein : nombre de modifications (O(n·m)), bon pour les fautes de frappe. Jaro-Winkler : favorise le préfixe commun, bon pour les noms. Jaccard / Q-gram : recouvrement de sous-chaînes ou de mots, robuste à l'ordre. Embeddings : similarité sémantique, mais plus coûteux et moins précis sur les identifiants.",
       },
       {
-        q: "Why dynamic SQL and cursors?",
-        a: "The same cleaning logic had to run on different tables and columns, so SQL statements are generated at run time and rows processed one by one when needed.",
+        q: "Pourquoi une clé de blocage ?",
+        a: "Comparer toutes les paires est O(n²). Le blocage (ici 3 premiers caractères) ne compare qu'au sein d'un bloc. Compromis : un bloc trop strict fait manquer des doublons.",
+      },
+      {
+        q: "Comment as-tu fixé tes 3 seuils ?",
+        a: "Rejet en dessous du seuil bas, fusion automatique au-dessus du seuil haut, zone intermédiaire envoyée en révision manuelle. Valeurs calibrées sur des paires annotées : [À COMPLÉTER].",
+      },
+      {
+        q: "Comment évaluer la déduplication ?",
+        a: "Précision et rappel sur des paires connues (doublon / non doublon) : une fusion à tort est plus grave qu'un doublon manqué.",
+      },
+      {
+        q: "Comment fonctionne la recherche « CTRL+F » à score hybride ?",
+        a: "Score combiné : similarité lexicale (tolérante aux fautes de frappe, type Q-gram) pondérée avec une similarité sémantique par embeddings. Pondération : [À COMPLÉTER].",
+      },
+      {
+        q: "Pourquoi PL/SQL et dynamic SQL ?",
+        a: "Pour exécuter la même logique de nettoyage sur plusieurs tables et colonnes, avec des requêtes générées à l'exécution et des curseurs pour les traitements ligne à ligne.",
+      },
+      {
+        q: "Comment as-tu travaillé en équipe de 5 ?",
+        a: "Répartition par module, Git avec branches et revues, conventions communes. Ma part : [À COMPLÉTER].",
+      },
+      {
+        q: "Comment dédoublonner à grande échelle ?",
+        a: "MinHash / LSH ou SimHash pour trouver les quasi-doublons sans comparer toutes les paires.",
       },
     ],
   },
@@ -281,16 +413,28 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
     stack: ["Python", "DuckDB", "dbt", "Airflow", "Docker Compose", "GitHub Actions"],
     qa: [
       {
-        q: "ETL or ELT?",
-        a: "ELT: raw data is loaded into the warehouse first and transformed there with SQL. It keeps raw data available and uses the database engine for the heavy lifting.",
+        q: "ETL vs ELT : pourquoi ELT ?",
+        a: "ELT charge les données brutes dans l'entrepôt puis les transforme en SQL. On garde le brut, on rejoue les transformations et on profite de la puissance du moteur analytique.",
       },
       {
-        q: "What does each tool do?",
-        a: "DuckDB stores and queries the data in columns; dbt manages SQL transformations as tables; Airflow schedules and orders the tasks.",
+        q: "Qu'est-ce qu'un DAG Airflow et que veut dire idempotence ?",
+        a: "Un graphe orienté acyclique de tâches avec dépendances. Idempotence : relancer une tâche donne le même résultat sans doublons, ce qui rend retries et backfills sûrs.",
       },
       {
-        q: "Why Docker Compose and GitHub Actions?",
-        a: "Compose makes the environment reproducible on any machine; GitHub Actions checks the project automatically on each push.",
+        q: "Quel est le rôle de dbt et comment testes-tu les données ?",
+        a: "dbt transforme des requêtes SQL en modèles (tables / vues) versionnés, avec tests (unique, not_null, relationships) et documentation.",
+      },
+      {
+        q: "Pourquoi DuckDB ?",
+        a: "Base analytique embarquée et colonnaire : rapide en agrégation, sans serveur à gérer. À la différence de PostgreSQL (orienté lignes, transactionnel).",
+      },
+      {
+        q: "Que fait ta CI avec GitHub Actions ?",
+        a: "À chaque push, elle installe l'environnement et lance les vérifications (tests dbt, lint) pour détecter les régressions. Détail exact : [À COMPLÉTER].",
+      },
+      {
+        q: "Comment ce pipeline pourrait-il alimenter un système IA ?",
+        a: "Il fournit des données propres et versionnées : tables de features pour du ML, ou documents nettoyés pour alimenter une base vectorielle dans un RAG.",
       },
     ],
   },
