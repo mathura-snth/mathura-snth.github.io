@@ -350,10 +350,10 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
     summary:
       "Data-quality toolkit in Oracle SQL to clean a database: duplicate detection and merging, normalisation and enrichment.",
     highlights: [
-      "Studied several similarity algorithms (e.g. bigrams) depending on text vs. categorical fields",
-      "Blocking: group rows by a key (first 3 characters) and compare only within blocks",
+      "Studied several similarity algorithms (e.g. bigrams)",
+      "Removing duplicates by: 1) concatenating columns (excluding the primary key), 2) creating a blocking key (e.g., first 3 characters), 3) comparing the table to itself (excluding self-matches), 4) detecting exact or fuzzy matches, and 5) merging records (retaining the longest row)",
       "Merge step that keeps rules on which values survive",
-      "Field normalisation, then enrichment by embeddings (with PRF), not applied to the whole base",
+      "Control-Find : Field normalisation, then enrichment by embeddings (with PRF)",
       "Functional dependencies leading to occurrence counts",
     ],
     stack: ["Oracle SQL", "Cursors", "Dynamic SQL", "Regex", "Python", "Embeddings"],
@@ -371,8 +371,8 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
         a: "Comparer toutes les paires est O(n²). Le blocage (ici 3 premiers caractères) ne compare qu'au sein d'un bloc. Compromis : un bloc trop strict fait manquer des doublons.",
       },
       {
-        q: "Comment as-tu fixé tes 3 seuils ?",
-        a: "Rejet en dessous du seuil bas, fusion automatique au-dessus du seuil haut, zone intermédiaire envoyée en révision manuelle. Valeurs calibrées sur des paires annotées : [À COMPLÉTER].",
+        q: "Comment sont ficés les 3 seuils ?",
+        a: "Rejet en dessous du seuil bas, fusion automatique au-dessus du seuil haut, zone intermédiaire envoyée en révision manuelle.",
       },
       {
         q: "Comment évaluer la déduplication ?",
@@ -380,15 +380,11 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
       },
       {
         q: "Comment fonctionne la recherche « CTRL+F » à score hybride ?",
-        a: "Score combiné : similarité lexicale (tolérante aux fautes de frappe, type Q-gram) pondérée avec une similarité sémantique par embeddings. Pondération : [À COMPLÉTER].",
+        a: "Score combiné : similarité lexicale (tolérante aux fautes de frappe, type Q-gram) pondérée avec une similarité sémantique par embeddings.",
       },
       {
         q: "Pourquoi PL/SQL et dynamic SQL ?",
         a: "Pour exécuter la même logique de nettoyage sur plusieurs tables et colonnes, avec des requêtes générées à l'exécution et des curseurs pour les traitements ligne à ligne.",
-      },
-      {
-        q: "Comment as-tu travaillé en équipe de 5 ?",
-        a: "Répartition par module, Git avec branches et revues, conventions communes. Ma part : [À COMPLÉTER].",
       },
       {
         q: "Comment dédoublonner à grande échelle ?",
