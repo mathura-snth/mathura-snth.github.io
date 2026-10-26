@@ -393,7 +393,7 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
     ],
   },
 
-  "m1-ingenierie-donnees": {
+  "pipeline-modern-stack": {
     summary:
       "Data engineering pipeline on a modern stack: collect, clean and make raw data usable, orchestrated and reproducible.",
     context: "Status: ingestion done; Docker and Airflow containerisation still to do.",
@@ -416,7 +416,7 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
         a: "Un graphe orienté acyclique de tâches avec dépendances. Idempotence : relancer une tâche donne le même résultat sans doublons, ce qui rend retries et backfills sûrs.",
       },
       {
-        q: "Quel est le rôle de dbt et comment testes-tu les données ?",
+        q: "Quel est le rôle de dbt et comment tester les données ?",
         a: "dbt transforme des requêtes SQL en modèles (tables / vues) versionnés, avec tests (unique, not_null, relationships) et documentation.",
       },
       {
@@ -424,8 +424,8 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
         a: "Base analytique embarquée et colonnaire : rapide en agrégation, sans serveur à gérer. À la différence de PostgreSQL (orienté lignes, transactionnel).",
       },
       {
-        q: "Que fait ta CI avec GitHub Actions ?",
-        a: "À chaque push, elle installe l'environnement et lance les vérifications (tests dbt, lint) pour détecter les régressions. Détail exact : [À COMPLÉTER].",
+        q: "Que fait la CI avec GitHub Actions ?",
+        a: "À chaque push, elle installe l'environnement et lance les vérifications (tests dbt, lint) pour détecter les régressions.",
       },
       {
         q: "Comment ce pipeline pourrait-il alimenter un système IA ?",

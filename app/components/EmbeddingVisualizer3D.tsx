@@ -31,6 +31,8 @@ const GITHUB_REPOS: DataPoint[] = [
   { id: "smartdata", x: -15, y: -5, z: 5, category: "Machine Learning & Data Engineering", label: "SmartDATA-Quality", github: "https://github.com/mathura-snth/bda", keywords: ["Oracle SQL", "Data Quality", "Anomaly Detection", "Embeddings"] },
   { id: "m1-ingenierie-donnees", x: -18, y: 0, z: 10, category: "Machine Learning & Data Engineering", label: "M1-Ingenierie_Donnees", github: "https://github.com/mathura-snth/M1-Ingenierie_Donnees", keywords: ["Data Engineering", "ETL"] },
   { id: "etics-toxicity", x: -11, y: 5, z: 9, category: "AI & Large Language Models", label: "ETICS-LLM-Contract-Analysis", github: "https://github.com/mathura-snth/ETICS-LLM-Contract-Analysis", keywords: ["LLM-as-a-Judge", "Data Engineering", "PostgreSQL", "NLP", "Ethics"] },
+  { id: "pipeline-modern-stack", x: -13, y: 5, z: 9, category: "Machine Learning & Data Engineering", label: "Pipeline-Modern-Stack", github: "https://github.com/mathura-snth/Pipeline-Modern-Stack", keywords: ["ELT", "DuckDB", "dbt", "Airflow", "GitHub Actions"] },
+  
   // --- Distributed Systems & Architecture ---
   { id: "distributed-2pc", x: -1, y: -13, z: -9, category: "Distributed Systems & Architecture", label: "Distributed-System-2PC", github: "https://github.com/mathura-snth", keywords: ["Java", "2PC", "Sockets", "Multithreading"] },
   { id: "mpi-distributed", x: -4, y: -12, z: -14, category: "Distributed Systems & Architecture", label: "MPI-Distributed-Algorithms", github: "https://github.com/mathura-snth/MPI-Distributed-Algorithms", keywords: ["MPI", "Distributed Algorithms", "Parallel Computing"] },
