@@ -138,7 +138,7 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
     summary:
       "RAG assistant that answers questions about university theses with sources that are cited and verifiable, with a hallucination-checking step and automatic evaluation.",
     context:
-      "Data: theses from the University of Geneva, about 400 pages, i.e. around 4,000 segments.",
+      "Data: theses from the University of Geneva, about 1400 pages, i.e. around 4000 segments.",
     highlights: [
       "Ingestion: PDF parsing with PyMuPDF, chunking, embedding",
       "Storage in ChromaDB, an on-disk vector database",
@@ -150,7 +150,7 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
     stack: ["Python", "FastAPI", "LangChain", "ChromaDB", "PyMuPDF", "Qwen via Groq", "RAGAS"],
     qa: [
       {
-        q: "Décris ton architecture de bout en bout.",
+        q: "Description de l'architecture de bout en bout.",
         a: "PDF → extraction PyMuPDF → découpage en chunks (1 483 pages, 4 011 segments) → embeddings (dim. 384) → ChromaDB. À la requête : embedding de la question, top-k par similarité, prompt avec contexte et citations, génération (Qwen via Groq), puis vérification CoVe. Le tout exposé par une API FastAPI.",
       },
       {
@@ -158,8 +158,8 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
         a: "Pour comprendre et maîtriser chaque brique (découpage, retrieval, évaluation) plutôt que de subir les abstractions d'un framework.",
       },
       {
-        q: "Comment as-tu choisi la taille des chunks ?",
-        a: "Compromis : trop petit, on perd le contexte ; trop grand, le vecteur dilue le sens et on consomme la fenêtre de contexte. Taille et overlap : [À COMPLÉTER], ajustés sur la qualité de retrieval. Moyenne : environ 1 483 pages / 4 011 segments, soit 2 à 3 segments par page.",
+        q: "Comment choisir la taille des chunks ?",
+        a: "Compromis : trop petit, on perd le contexte ; trop grand, le vecteur dilue le sens et on consomme la fenêtre de contexte. Taille et overlap : ajustés sur la qualité de retrieval. Moyenne : environ 1 483 pages / 4 011 segments, soit 2 à 3 segments par page.",
       },
       {
         q: "Pourquoi ChromaDB et comment cherche-t-il ?",
@@ -171,7 +171,7 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
       },
       {
         q: "Comment améliorer le retrieval ?",
-        a: "Recherche hybride (BM25 + dense), reranker cross-encoder (plus précis qu'un bi-encoder mais plus lent, donc appliqué au top-k seulement), réécriture de requête, filtres sur métadonnées.",
+        a: "Recherche hybride (BM25 + vecteur dense), reranker cross-encoder (plus précis qu'un bi-encoder mais plus lent, donc appliqué au top-k seulement), réécriture de requête, filtres sur métadonnées.",
       },
       {
         q: "Quelles sont les limites de PyMuPDF sur des thèses ?",
@@ -179,7 +179,7 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
       },
       {
         q: "Comment fonctionne Ragas ?",
-        a: "Un LLM juge calcule : faithfulness (les affirmations sont-elles soutenues par le contexte ?), answer relevancy, context precision (le contexte utile est-il bien classé ?) et context recall (a-t-on tout récupéré ?). Les scores obtenus : [À COMPLÉTER].",
+        a: "Un LLM juge calcule : faithfulness (les affirmations sont-elles soutenues par le contexte ?), answer relevancy, context precision (le contexte utile est-il bien classé ?) et context recall (a-t-on tout récupéré ?).",
       },
       {
         q: "Quels sont les biais d'un LLM juge ?",
@@ -195,7 +195,7 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
       },
       {
         q: "Qu'est-ce que MCP et en quoi diffère-t-il du function calling ?",
-        a: "Model Context Protocol : un standard ouvert pour exposer outils et données à un LLM via un serveur. Le function calling est la capacité du modèle à appeler des fonctions ; MCP standardise comment ces outils sont décrits et branchés, de façon réutilisable entre applications.",
+        a: "Model Context Protocol : permet d'exposer outils et données à un LLM via un serveur. Le function calling est la capacité du modèle à appeler des fonctions ; MCP standardise comment ces outils sont décrits et branchés, de façon réutilisable entre applications.",
       },
       {
         q: "RAG ou agent : quand choisir quoi ?",
@@ -203,7 +203,7 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
       },
       {
         q: "Et pour la confidentialité des données ?",
-        a: "Ici le corpus est public (thèses). Avec des données sensibles : modèle auto-hébergé ou contrat conforme RGPD, anonymisation et contrôle d'accès.",
+        a: "Ici le corpus est public (les thèses). Avec des données sensibles : modèle auto-hébergé ou contrat conforme RGPD, anonymisation et contrôle d'accès.",
       },
     ],
   },
