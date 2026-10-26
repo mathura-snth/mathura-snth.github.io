@@ -95,7 +95,7 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
         a: "Comparaison baseline vs CoVe sur le même benchmark, avec les mêmes métriques.",
       },
       {
-        q: "Quelles méthodes d'explicabilité (XAI) connais-tu pour les LLM ?",
+        q: "Quelles méthodes d'explicabilité (XAI) y a t-il pour les LLM ?",
         a: "Self-attention, attributions par gradient, SHAP/LIME. Elles aident à comprendre où le modèle s'appuie, sans prouver la causalité.",
       },
     ],
@@ -243,21 +243,21 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
       "Steps: PDF extraction, cleaning, segmentation, output as JSON",
       "Goal: a data warehouse for general toxicity analysis",
       "Toxicity score evaluated against a golden dataset, with an LLM as judge",
-      "Low temperature to reduce creativity; human in the loop to reduce hallucinations",
+      "Low temperature (to reduce creativity) and human in the loop to reduce hallucinations",
     ],
     stack: ["Python", "PyMuPDF", "pdfplumber", "Regex", "PostgreSQL", "SQL", "LLM"],
     qa: [
       {
-        q: "Comment as-tu extrait les PDF et segmenté en clauses ?",
+        q: "Comment extraire les PDF et segmenter en clauses ?",
         a: "PyMuPDF avec détection de colonnes, nettoyage (en-têtes, numéros de page), puis segmentation par expressions régulières sur la numérotation des articles. Les regex sont rapides, déterministes et vérifiables, mais fragiles face aux formats atypiques.",
       },
       {
-        q: "Comment forces-tu le LLM à sortir du JSON valide ?",
+        q: "Comment forcer le LLM à sortir du JSON valide ?",
         a: "Schéma explicite dans le prompt (ou mode JSON / sortie structurée), validation avec Pydantic, nouvelle tentative en cas d'échec, température basse. Si le JSON reste invalide, l'élément est rejeté et journalisé.",
       },
       {
         q: "Qu'est-ce qu'une clause « toxique » et qui a défini la vérité terrain ?",
-        a: "Clause abusive ou défavorable au client selon des critères définis à l'avance. Annotation : [À COMPLÉTER] (qui, selon quels critères, accord entre annotateurs ?). Avec environ 20 contrats, la vérité terrain est petite et possiblement biaisée.",
+        a: "Clause abusive ou défavorable au client selon des critères définis à l'avance. Avec pour l'instant environ 20 contrats, la vérité terrain est petite et possiblement biaisée.",
       },
       {
         q: "Pourquoi prioriser le rappel ?",
@@ -273,7 +273,7 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
       },
       {
         q: "Pourquoi 5 entités dans le modèle conceptuel ?",
-        a: "[À COMPLÉTER : liste de tes 5 entités]. Chaque entité correspond à un concept distinct (contrat, clause, etc.) pour éviter la redondance (normalisation).",
+        a: "Chaque entité correspond à un concept distinct (contrat, clause, etc.) pour éviter la redondance (normalisation).",
       },
       {
         q: "Un LLM peut-il donner un avis juridique ?",
