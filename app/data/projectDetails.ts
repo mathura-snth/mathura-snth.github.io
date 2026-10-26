@@ -27,15 +27,15 @@ const NLP_SEARCH: ProjectDetail = {
   stack: ["Python", "Flask", "TF-IDF", "Sentence-Transformers", "WordNet", "Docker", "Docker Compose", "TiDB Serverless", "pytest"],
   qa: [
     {
-      q: "TF-IDF ou « embeddings » : comment les avez-vous comparés ?",
+      q: "TF-IDF ou Embeddings : comment les comparer ?",
       a: "Les deux approches ont été évaluées sur les mêmes requêtes à l'aide du rappel (recall), du MAP et du nDCG. Le TF-IDF repose sur une correspondance exacte du vocabulaire, tandis que les « embeddings » capturent le sens ; le découpage en segments (« chunking ») permet, quant à lui, de concentrer chaque vecteur sur un court passage.",
     },
     {
-      q: "Qu'est-ce que le « pseudo-relevance feedback » ?",
+      q: "Qu'est-ce que le pseudo-relevance feedback ?",
       a: "Il s'agit de considérer les premiers résultats d'une recherche initiale comme pertinents, d'en extraire les termes les plus caractéristiques, puis de les ajouter à la requête pour une seconde itération. Cette méthode améliore le rappel, mais peut entraîner une dérive si les résultats initiaux ne sont pas pertinents.",
     },
     {
-      q: "Pourquoi utiliser le nDCG et le MAP plutôt que la simple précision (« accuracy ») ?",
+      q: "Pourquoi utiliser le nDCG et le MAP plutôt que la simple précision (accuracy) ?",
       a: "La recherche documentaire est un problème de classement : ce qui importe, ce n'est pas seulement que des éléments pertinents soient renvoyés, mais aussi leur position dans les résultats. Le MAP et le nDCG valorisent un classement pertinent.",
     },
     {
@@ -43,7 +43,7 @@ const NLP_SEARCH: ProjectDetail = {
       a: "L'application se compose de deux services (une API et une interface front-end). Docker Compose permet de les lancer simultanément via une configuration unique et reproductible ; par ailleurs, l'utilisation d'images préconstruites sur Docker Hub évite de devoir tout reconstruire sur chaque machine.",
     },
     {
-      q: "Comment avez-vous testé l'application ?",
+      q: "Comment tester l'application ?",
       a: "Nous avons mis en place des tests unitaires avec « pytest » et « monkeypatch » pour isoler les fonctions ; des tests d'intégration sur l'API Flask, en utilisant une base de données SQLite en mémoire ; et des tests de bout en bout (« end-to-end ») avec Chromium pour simuler le parcours réel d'un utilisateur. Le même code est utilisé avec SQLite lors des tests et avec TiDB en production.",
     },
   ],
