@@ -301,11 +301,11 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
     qa: [
       {
         q: "Quel est le jeu de données et la cible ?",
-        a: "64 271 lignes, cible multiclasse (score de 1 à 5), fortement déséquilibrée. Répartition des classes : [À COMPLÉTER].",
+        a: "64 271 lignes, cible multiclasse (score de 1 à 5), fortement déséquilibrée.",
       },
       {
-        q: "Raconte la fuite de cible (F1 0,93 → 0,19).",
-        a: "Une variable [À COMPLÉTER] encodait déjà l'information de la cible, d'où 0,93. Détection : score anormalement élevé et importance dominante de cette variable. Après retrait, 0,19 est le résultat honnête : les variables disponibles séparent mal les classes.",
+        q: "Y a t-il a fuite de cible ?",
+        a: "Une variable (le salaire mensuel) encodait déjà l'information de la cible, d'où 0,93. Détection : score anormalement élevé et importance dominante de cette variable. Après retrait, 0,19 est le résultat honnête : les variables disponibles séparent mal les classes.",
       },
       {
         q: "Pourquoi macro-F1 plutôt qu'accuracy ?",
@@ -317,26 +317,26 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
       },
       {
         q: "Quand SMOTE est-il peu adapté ?",
-        a: "Données de grande dimension, variables catégorielles, classes qui se chevauchent : les points synthétiques créent alors du bruit.",
+        a: "Données de grande dimension, variables catégorielles, classes qui se chevauchent : les points synthétiques créent du bruit.",
       },
       {
         q: "Comment fonctionne le gradient boosting / XGBoost ?",
         a: "Des arbres faibles ajoutés séquentiellement, chacun corrigeant l'erreur résiduelle (gradient de la perte) du précédent, avec régularisation. Hyperparamètres clés : learning rate, profondeur, nombre d'arbres, subsample. Optimisés par validation croisée à 5 plis (stratifiée).",
       },
       {
-        q: "Écris la perte et le gradient de la régression softmax.",
+        q: "Quels sont la perte et le gradient de la régression softmax ?",
         a: "Perte : entropie croisée L = −(1/n) Σ log p(y_i|x_i). Gradient : (1/n) Xᵀ(P − Y) avec P les probabilités softmax. Stabilité numérique : soustraire le max avant l'exponentielle (log-sum-exp).",
       },
       {
-        q: "Comment as-tu vérifié le gradient ?",
+        q: "Comment vérifier le gradient ?",
         a: "Par différences finies centrées (f(θ+ε) − f(θ−ε)) / 2ε, comparées au gradient analytique : erreur relative de l'ordre de 1e-7 attendue.",
       },
       {
-        q: "Explique le bootstrap et les différences appariées.",
-        a: "On rééchantillonne avec remise pour estimer la variabilité d'une métrique, d'où un intervalle de confiance à 95 % (percentile). Les différences appariées comparent deux modèles sur les mêmes rééchantillons, ce qui annule la variance commune et donne un test plus puissant.",
+        q: "C'est quoi le bootstrap et les différences appariées.",
+        a: "On rééchantillonne avec remise pour estimer la variabilité d'une métrique, d'où un intervalle de confiance à 95 %. Les différences appariées comparent deux modèles sur les mêmes rééchantillons, ce qui annule la variance commune et donne un test plus puissant.",
       },
       {
-        q: "Quelle conclusion tires-tu ?",
+        q: "Quelle conclusion en tirer ?",
         a: "Le rééquilibrage augmente le rappel des classes rares au prix de la précision. Il ne crée pas d'information : savoir qu'un modèle n'a pas de signal est un résultat en soi.",
       },
       {
