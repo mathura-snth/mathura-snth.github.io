@@ -27,24 +27,24 @@ const NLP_SEARCH: ProjectDetail = {
   stack: ["Python", "Flask", "TF-IDF", "Sentence-Transformers", "WordNet", "Docker", "Docker Compose", "TiDB Serverless", "pytest"],
   qa: [
     {
-      q: "TF-IDF or embeddings: how did you compare them?",
-      a: "Both were evaluated on the same queries with recall, MAP and nDCG. TF-IDF matches exact vocabulary; embeddings capture meaning, and chunking keeps each vector focused on a short passage.",
+      q: "TF-IDF ou « embeddings » : comment les avez-vous comparés ?",
+      a: "Les deux approches ont été évaluées sur les mêmes requêtes à l'aide du rappel (recall), du MAP et du nDCG. Le TF-IDF repose sur une correspondance exacte du vocabulaire, tandis que les « embeddings » capturent le sens ; le découpage en segments (« chunking ») permet, quant à lui, de concentrer chaque vecteur sur un court passage.",
     },
     {
-      q: "What is pseudo-relevance feedback?",
-      a: "You assume the top results of a first search are relevant, extract their most characteristic terms, and add them to the query for a second pass. It improves recall, but can drift if the first results are poor.",
+      q: "Qu'est-ce que le « pseudo-relevance feedback » ?",
+      a: "Il s'agit de considérer les premiers résultats d'une recherche initiale comme pertinents, d'en extraire les termes les plus caractéristiques, puis de les ajouter à la requête pour une seconde itération. Cette méthode améliore le rappel, mais peut entraîner une dérive si les résultats initiaux ne sont pas pertinents.",
     },
     {
-      q: "Why nDCG and MAP rather than accuracy?",
-      a: "Search is a ranking problem: what matters is not only whether relevant items are returned, but how high they appear. MAP and nDCG reward good ordering.",
+      q: "Pourquoi utiliser le nDCG et le MAP plutôt que la simple précision (« accuracy ») ?",
+      a: "La recherche documentaire est un problème de classement : ce qui importe, ce n'est pas seulement que des éléments pertinents soient renvoyés, mais aussi leur position dans les résultats. Le MAP et le nDCG valorisent un classement pertinent.",
     },
     {
-      q: "Why Docker Compose?",
-      a: "The app has two services (API and frontend). Compose starts them together with a single reproducible configuration, and prebuilt images on Docker Hub avoid rebuilding everything on each machine.",
+      q: "Pourquoi avoir choisi Docker Compose ?",
+      a: "L'application se compose de deux services (une API et une interface front-end). Docker Compose permet de les lancer simultanément via une configuration unique et reproductible ; par ailleurs, l'utilisation d'images préconstruites sur Docker Hub évite de devoir tout reconstruire sur chaque machine.",
     },
     {
-      q: "How did you test the app?",
-      a: "Unit tests with pytest and monkeypatch to isolate functions; integration tests on the Flask API with an in-memory SQLite database; end-to-end tests with Chromium to simulate a real user path. The same code runs against SQLite in tests and TiDB in production.",
+      q: "Comment avez-vous testé l'application ?",
+      a: "Nous avons mis en place des tests unitaires avec « pytest » et « monkeypatch » pour isoler les fonctions ; des tests d'intégration sur l'API Flask, en utilisant une base de données SQLite en mémoire ; et des tests de bout en bout (« end-to-end ») avec Chromium pour simuler le parcours réel d'un utilisateur. Le même code est utilisé avec SQLite lors des tests et avec TiDB en production.",
     },
   ],
 };
