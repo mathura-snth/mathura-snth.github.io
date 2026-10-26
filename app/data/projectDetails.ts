@@ -103,29 +103,32 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
 
   "synthetic-bench": {
     summary:
-      "Benchmark built for the AAAI Student Program to check that CoVe holds on harder problems: mathematical reasoning, not just text retrieval.",
+      "Benchmark to check that CoVe holds on harder problems: mathematical reasoning, not just text retrieval.",
     highlights: [
-      "Generate a copy (a worked solution), then inject typed errors into it",
+      "Generate a copy (a student copy containing hypothesis in order to apply a theorem), then inject typical errors into it",
       "Because the errors are injected, the ground truth is known by construction",
-      "Generation script: implications.py",
-      "Export the dataset and give it to the LLM to verify",
+      "The key strength of this benchmark is its complexity: it goes beyond simple calculations to assess the LLM’s logical reasoning. It tests the application of theorems, the identification of implicit assumptions, and the validation of implications (e.g., validating that A holds if A implies B), ensuring an evaluation of deep reasoning rather than keyword-based search.",
     ],
     stack: ["Python", "Formal methods", "Theorem proving", "Dataset design"],
     qa: [
       {
-        q: "Comment conçois-tu un benchmark valide ?",
-        a: "Couverture variée des cas, vérité terrain fiable, pas de contamination avec les données d'entraînement, reproductibilité (seed, script) et difficulté graduée.",
+        q: "Comment ce benchmark a été conçu ?",
+        a: "Je l'ai construit directement à partir de mes cours de mathématiques de licence. J'ai utilisé les théorèmes, les définitions et les exercices vus en classe pour garantir une vérité terrain parfaitement exacte et pertinente.",
+      },
+      {
+        q: "Comment concevoir un benchmark valide ?",
+        a: "Se baser sur des faits vérifiés, Couverture variée des cas, vérité terrain fiable, pas de contamination avec les données d'entraînement.",
       },
       {
         q: "Pourquoi un benchmark synthétique avec erreurs injectées ?",
-        a: "La vérité terrain est connue par construction (position et type de l'erreur), sans annotation manuelle, et on contrôle la difficulté.",
+        a: "La vérité terrain est connue par construction (position et type de l'erreur), sans annotation manuelle.",
       },
       {
         q: "Limites d'un benchmark synthétique ?",
         a: "Les erreurs injectées ne reflètent pas forcément les erreurs réelles d'un LLM, et le modèle peut repérer des artefacts de génération. D'où l'intérêt de le compléter par des cas réels.",
       },
       {
-        q: "Comment mesures-tu la détection d'erreurs ?",
+        q: "Comment mesurer la détection d'erreurs ?",
         a: "Rappel et précision par type d'erreur, plus la localisation de l'erreur. Le typage évite un score global qui cache les faiblesses.",
       },
     ],
