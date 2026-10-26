@@ -68,15 +68,15 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
       },
       {
         q: "Pourquoi les LLM hallucinent-ils ?",
-        a: "Ils sont entraînés à prédire le token le plus probable, pas à dire le vrai. Données lacunaires ou bruitées, absence de grounding et décodage qui privilégie la fluidité favorisent l'erreur.",
+        a: "Ils sont entraînés à prédire le token le plus probable, pas à dire le vrai. Données lacunaires, figées dans le temps ou bruitées, absence de grounding et décodage qui privilégie la fluidité favorisent l'erreur.",
       },
       {
-        q: "Explique CoVe en 4 étapes.",
+        q: "Quelles sont les étapes de CoVe.",
         a: "1) Réponse initiale (baseline). 2) Planification de questions de vérification. 3) Réponse à chaque question de façon indépendante. 4) Réponse finale corrigée à partir des faits vérifiés.",
       },
       {
         q: "Pourquoi répondre aux questions de vérification sans voir la baseline ?",
-        a: "Si le modèle voit sa réponse initiale, il tend à la confirmer et à répéter ses erreurs. L'isolation (variante « factored ») donne une vérification indépendante.",
+        a: "Si le modèle voit sa réponse initiale, il tend à la confirmer et à répéter ses erreurs. L'isolation (« factored ») donne une vérification indépendante.",
       },
       {
         q: "Quelles sont les limites de CoVe ?",
@@ -87,20 +87,16 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
         a: "Chain-of-thought : raisonner étape par étape. Self-consistency : échantillonner plusieurs raisonnements et voter. Self-refine : critiquer puis réécrire sa réponse. CoVe : vérifier des faits précis via des questions indépendantes.",
       },
       {
-        q: "Quelle a été ta principale difficulté technique ?",
+        q: "Quelle a été la principale difficulté technique ?",
         a: "Le parsing : le pipeline enchaîne plusieurs appels, donc chaque sortie doit être un JSON valide sinon l'étape suivante casse. Solution : prompt strict, validation du schéma, nouvelle tentative en cas d'échec.",
       },
       {
-        q: "Comment as-tu mesuré que CoVe améliore la fidélité ?",
-        a: "Comparaison baseline vs CoVe sur le même benchmark, avec les mêmes métriques. Gain mesuré : [À COMPLÉTER]. Limite : un seul modèle et un benchmark restreint.",
+        q: "Comment il a été mesuré que CoVe améliore la fidélité ?",
+        a: "Comparaison baseline vs CoVe sur le même benchmark, avec les mêmes métriques.",
       },
       {
         q: "Quelles méthodes d'explicabilité (XAI) connais-tu pour les LLM ?",
-        a: "Attention (discutable comme explication), attributions par gradient, SHAP/LIME, perturbation d'entrée, probing, logit lens. Elles aident à comprendre où le modèle s'appuie, sans prouver la causalité.",
-      },
-      {
-        q: "Quelle est ta contribution à l'abstract AAAI ?",
-        a: "[À COMPLÉTER] : ce que tu as implémenté, le résultat principal et le statut (soumis / accepté). Reste exacte : « soumis » ne veut pas dire accepté.",
+        a: "Self-attention, attributions par gradient, SHAP/LIME. Elles aident à comprendre où le modèle s'appuie, sans prouver la causalité.",
       },
     ],
   },
