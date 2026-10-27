@@ -24,7 +24,7 @@ const NLP_SEARCH: ProjectDetail = {
     "Prebuilt images published on Docker Hub; TiDB Serverless as a MySQL-compatible cloud database",
     "Three test levels: unit (pytest, monkeypatch), integration (in-memory SQLite), end-to-end (Chromium simulating a real user journey)",
   ],
-  stack: ["Python", "Flask", "TF-IDF", "Sentence-Transformers", "WordNet", "Docker", "Docker Compose", "TiDB Serverless", "pytest"],
+  stack: ["NLTK","Python", "Flask", "TF-IDF", "Sentence-Transformers","PyTorch", "WordNet", "Docker", "Docker Compose", "TiDB Serverless", "pytest", "php"],
   qa: [
     {
       q: "TF-IDF ou Embeddings : comment les comparer ?",
@@ -60,7 +60,7 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
       "Each question is answered in isolation, without seeing the baseline",
       "Main difficulty: parsing, i.e. forcing the model to output only valid JSON",
     ],
-    stack: ["Python", "PyTorch", "Qwen (free model)", "Claude", "Kaggle (GPU)"],
+    stack: ["Python", "PyTorch", "Qwen2.5-7B-Instruct", "bitsandbytes", "Claude", "Kaggle (GPU)", "Regex", "pandas", "matplotlib"],
     qa: [
       {
         q: "Qu'est-ce qu'une hallucination de LLM ?",
@@ -245,7 +245,7 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
       "Toxicity score evaluated against a golden dataset, with an LLM as judge",
       "Low temperature (to reduce creativity) and human in the loop to reduce hallucinations",
     ],
-    stack: ["Python", "PyMuPDF", "pdfplumber", "Regex", "PostgreSQL", "SQL", "LLM"],
+    stack: ["Python", "PyMuPDF", "pdfplumber", "Regex", "PostgreSQL", "SQL", "LLM", "Docker", "Hashlib"],
     qa: [
       {
         q: "Comment extraire les PDF et segmenter en clauses ?",
@@ -297,7 +297,7 @@ export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
     ],
     context:
       "Conclusion: before rebalancing, the model predicted the majority score for everyone. After, it detects more rare cases but also makes more mistakes: the classes are not distinguishable from the available variables, so shifting the threshold is a trade-off, not a fix.",
-    stack: ["Python", "NumPy", "scikit-learn", "SMOTE", "Balanced Random Forest", "XGBoost"],
+    stack: ["Python", "NumPy", "scikit-learn", "SMOTE", "Balanced Random Forest", "XGBoost", "Cross-Validation", "Under-sampling", "Softmax Regression", "Bootstrap"],
     qa: [
       {
         q: "Quel est le jeu de données et la cible ?",
