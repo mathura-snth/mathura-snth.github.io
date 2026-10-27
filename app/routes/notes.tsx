@@ -120,6 +120,12 @@ const NOTES: Note[] = [
     category: "ai",
     path: "/pdfs/RAG.pdf",
   },
+  {
+    id: "pydantic",
+    title: "Pydantic & LangChain",
+    category: "ai",
+    path: "/pdfs/Pydantic.pdf"
+  }
 ];
 
 function PdfIcon() {
